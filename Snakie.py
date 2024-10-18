@@ -4,8 +4,8 @@ import random
 #constants
 GAME_WIDTH = 700
 GAME_HIEGHT = 700
-SPEED = 300 #the lower the number the faster the game 90
-SPACE_SIZE = 50
+SPEED = 200 #the lower the number the faster the game 90
+SPACE_SIZE = 60
 BODY_PARTS = 2
 SNAKE_COLOR = "#89CFF0"
 FOOD_COLOR = "#FF0000"
@@ -110,6 +110,15 @@ def next_turn(snake, food):
     elif direction == "left":       
         x -= SPACE_SIZE
 
+    if x >= GAME_WIDTH:
+        x = 0
+    elif x < 0:
+        x = GAME_WIDTH - (GAME_WIDTH % SPACE_SIZE)
+    elif y >= GAME_HIEGHT:
+        y = 0
+    elif y < 0:
+        y = GAME_HIEGHT - (GAME_HIEGHT % SPACE_SIZE)
+
     snake.coordinates.insert(0, [x, y])
 
     oval = canvas.create_oval(x, y, x +SPACE_SIZE, y+ SPACE_SIZE, fill=SNAKE_COLOR)
@@ -164,7 +173,7 @@ def change_direction(new_direction):
             direction = new_direction
 
     elif new_direction == 'down':
-        if direction != 'updd':
+        if direction != 'up':
             direction = new_direction        
 
 def check_collisions(snake):
